@@ -1,0 +1,16 @@
+---
+# tasks file for marathon-lb
+
+- name: run marathon-lb container
+  docker_container:
+    name: marathon-lb
+    image: "{{ marathon_lb_image }}"
+    state: started
+    detach: true
+    restart_policy: always
+    network_mode: host
+    command: "sse --marathon {{marathon_lb_marathon_url}} --group {{marathon_lb_group}} --auth-credentials={{marathon_lb_auth_creds}}"
+    env: 
+      PORTS: "{{marathon_lb_ports}}"
+  tags: marathon-lb
+
