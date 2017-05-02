@@ -14,3 +14,13 @@
       PORTS: "{{marathon_lb_ports}}"
   tags: marathon-lb
 
+- name: register marathon-lb service in consul
+  consul:
+    service_name: "marathon-lb-{{marathon_lb_group}}"
+    service_port: "{{marathon_lb_ports}}"
+#    service_address: "{{ansible_default_ipv4.address}}"
+    state: present
+    http: "http://{{ansible_default_ipv4.address}}:{{marathon_lb_ports}}/_haproxy_health_check"
+    interval: 10s
+  tags: marathon-lb
+
