@@ -5,3 +5,4 @@ marathon_lb_marathon_url: "http://marathon.service.consul:8080"
 marathon_lb_ports: 9090
 marathon_lb_auth_creds: 'admin:****'
 marathon_lb_group: external
+marathon_lb_service_discovery: "consul"
