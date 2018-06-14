@@ -6,9 +6,9 @@ marathon_lb_ports: 9090
 marathon_lb_auth_creds: 'admin:****'
 marathon_lb_group: external
 
-marathon_lb_enable_marathon_lb: true
+marathon_lb_enable_marathon_lb: false
 marathon_lb_enable_chronos_lb: false
-marathon_lb_enable_mesos_lb: true
+marathon_lb_enable_mesos_lb: false
 
 marathon_lb_marathon_http_port: 8080
 marathon_lb_marathon_https_port: 8443

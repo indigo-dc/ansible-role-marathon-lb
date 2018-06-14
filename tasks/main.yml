@@ -4,8 +4,21 @@
 - name: Set facts
   set_fact: 
     marathon_servers: "{% if marathon_lb_marathon_servers is defined %}{{marathon_lb_marathon_servers}}{% else %}{{ groups['marathon_servers'] }}{% endif %}"
+  when: marathon_lb_enable_marathon_lb
+  tags:
+    - marathon-lb
+
+- name: Set facts
+  set_fact:
     chronos_servers:  "{% if marathon_lb_chronos_servers is defined %}{{marathon_lb_chronos_servers}}{% else %}{{ groups['chronos_servers'] }}{% endif %}"
+  when: marathon_lb_enable_chronos_lb
+  tags:
+    - marathon-lb
+
+- name: Set facts
+  set_fact:
     mesos_servers:    "{% if marathon_lb_mesos_servers is defined %}{{marathon_lb_mesos_servers}}{% else %}{{ groups['mesos_masters'] }}{% endif %}"
+  when: marathon_lb_enable_mesos_lb
   tags:
     - marathon-lb
 
