@@ -5,3 +5,18 @@ marathon_lb_marathon_url: "http://marathon.service.consul:8080"
 marathon_lb_ports: 9090
 marathon_lb_auth_creds: 'admin:****'
 marathon_lb_group: external
+
+marathon_lb_enable_marathon_lb: true
+marathon_lb_enable_chronos_lb: false
+marathon_lb_enable_mesos_lb: true
+
+marathon_lb_marathon_http_port: 8080
+marathon_lb_marathon_https_port: 8443
+marathon_lb_chronos_http_port: 4400
+marathon_lb_chronos_https_port: 4443
+marathon_lb_mesos_http_port: 5050
+
+#marathon_lb_marathon_servers:
+#marathon_lb_chronos_servers
+#marathon_lb_mesos_servers
+
