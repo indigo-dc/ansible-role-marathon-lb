@@ -1,17 +1,52 @@
 ---
 # tasks file for marathon-lb
 
+- name: Set facts
+  set_fact: 
+    marathon_servers: "{% if marathon_lb_marathon_servers is defined %}{{marathon_lb_marathon_servers}}{% else %}{{ groups['marathon_servers'] }}{% endif %}"
+    chronos_servers:  "{% if marathon_lb_chronos_servers is defined %}{{marathon_lb_chronos_servers}}{% else %}{{ groups['chronos_servers'] }}{% endif %}"
+    mesos_servers:    "{% if marathon_lb_mesos_servers is defined %}{{marathon_lb_mesos_servers}}{% else %}{{ groups['mesos_masters'] }}{% endif %}"
+  tags:
+    - marathon-lb
+
+- name: create directory path to store the persistent information 
+  file:
+    path: "/etc/marathon-lb"
+    state: directory
+    mode: 0755
+  tags:
+    - marathon-lb
+
+- name: create directory path to store marathon-lb templates
+  file:
+    path: "/etc/marathon-lb/templates"
+    state: directory
+    mode: 0755
+  tags:
+    - marathon-lb
+
+
+- name: create global lb template
+  template:
+    src=HAPROXY_HEAD.j2 dest=/etc/marathon-lb/templates/HAPROXY_HEAD
+  register: result
+  tags:
+    - marathon-lb
+
 - name: run marathon-lb container
   docker_container:
     name: marathon-lb
     image: "{{ marathon_lb_image }}"
     state: started
+    recreate: "{{ result.changed }}"
     detach: true
     restart_policy: always
     network_mode: host
     command: "sse --marathon {{marathon_lb_marathon_url}} --group {{marathon_lb_group}} --auth-credentials={{marathon_lb_auth_creds}}"
     env: 
       PORTS: "{{marathon_lb_ports}}"
+    volumes:
+    - "/etc/marathon-lb/templates:/marathon-lb/templates"
   tags: marathon-lb
 
 - name: register marathon-lb service in consul
