@@ -57,5 +57,6 @@
     state: present
     http: "http://{{ansible_default_ipv4.address}}:{{marathon_lb_ports}}/_haproxy_health_check"
     interval: 10s
+  when: (marathon_lb_service_discovery == "consul")
   tags: marathon-lb
 
