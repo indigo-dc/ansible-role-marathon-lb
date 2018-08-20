@@ -16,4 +16,4 @@ galaxy_info:
    - mesos
 
 dependencies: 
-  - role: "indigo-dc.docker,v0.0.2-dodas"
+  - role: "git+https://github.com/indigo-dc/ansible-role-docker,v0.0.2-dodas"
