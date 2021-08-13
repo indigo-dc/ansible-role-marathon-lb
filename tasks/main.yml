@@ -44,7 +44,7 @@
     network_mode: host
     command: "sse --marathon {{marathon_lb_marathon_url}} --group {{marathon_lb_group}} --auth-credentials={{marathon_lb_auth_creds}}"
     env: 
-      PORTS: "{{marathon_lb_ports}}"
+      PORTS: "{{marathon_lb_ports|quote}}"
     volumes:
     - "/etc/marathon-lb/templates:/marathon-lb/templates"
   tags: marathon-lb
